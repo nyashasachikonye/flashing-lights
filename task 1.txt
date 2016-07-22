@@ -1,0 +1,50 @@
+/* Includes */
+#include "stm32f4xx.h"
+#include "stm32f4_discovery.h"
+
+/* Private macro */
+#define GREENLED LED4
+#define BLUELED LED6
+
+void delay_ms(uint32_t milli);
+int main(void)
+{
+  int count = 0;
+  /* Initialize LEDs */
+  STM_EVAL_LEDInit(GREENLED);//initialize the LEDs
+  STM_EVAL_LEDInit(BLUELED);
+  /* Turn on LEDs */
+  STM_EVAL_LEDOn(GREENLED);//turn one on and the other off
+  STM_EVAL_LEDOff(BLUELED);
+  /* Infinite loop */
+  while (1)
+  {
+	  /* toggle Green LED */
+	  STM_EVAL_LEDToggle(GREENLED);//if on, turn it off, if off turn it on
+	  STM_EVAL_LEDToggle(BLUELED);//if on, turn it off, if off turn it on
+	  /* Delay for 1s */
+	  delay_ms(1000);//a 1000ms delay
+
+	  /* Increment count by 5 */
+	  count += 5;
+  }
+}
+
+
+
+void EVAL_AUDIO_TransferComplete_CallBack(uint32_t pBuffer, uint32_t Size){
+  /* TODO, implement your code here */
+  return;
+}
+
+uint16_t EVAL_AUDIO_GetSampleCallBack(void){
+  /* TODO, implement your code here */
+  return -1;
+}
+
+void delay_ms(uint32_t milli)
+{
+	uint32_t delay = milli * 17612;              // approximate loops per ms at 168 MHz, Debug config
+	for(; delay != 0; delay--);
+}
+
